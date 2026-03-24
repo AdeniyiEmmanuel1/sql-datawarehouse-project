@@ -1,0 +1,54 @@
+/*
+=======================================
+Create Database and Schemas
+=======================================
+
+Script Purpose:
+	This Script creates a new database named 'Datawarehouse' after checking if it already existed on the database
+	Additionally it also creates 3 layers, bronze, silver and gold for the data structure
+
+Warning: Running this script will drop the entire datawarehouse database if it exist
+		All data in the database will be deleted permanently; so proceed with caution
+*/
+
+---To check for the database if it already existed
+Use master;
+
+---To create a Database
+CREATE Database DataWarehouse;
+
+--- To check for Database Method 1
+/*IF EXISTS (
+    SELECT name 
+    FROM sys.databases 
+    WHERE name = 'DataWarehouse'
+)
+BEGIN
+    PRINT 'Database exists';
+END
+ELSE
+BEGIN
+    PRINT 'Database does not exist';
+END*/
+
+----mETHOD 2
+IF EXISTS (
+    SELECT 1 
+    FROM sys.databases
+    WHERE name = 'DataWarehouse')
+ BEGIN
+  PRINT 'Database exists';
+END
+ELSE
+BEGIN 
+    PRINT 'Database does not exist';
+END;
+
+---- To create a Data Structure
+USE DataWarehouse;
+GO
+CREATE SCHEMA Bronze;
+GO
+CREATE SCHEMA Silver;
+GO
+CREATE SCHEMA Gold;
