@@ -61,11 +61,11 @@ CREATE TABLE Bronze.erp_PX_CAT_G1V2 (
                 CAT NVARCHAR(50),
                 SUBCAT NVARCHAR(50),
                 MAINTENANCE BIT);
-/*
-============================================
-TO ALTER THE DATA TYPE OF THE CREATED TABLE
-============================================
-*/
+
+PRINT'=========================================================================='
+PRINT'TO ALTER THE DATA TYPE OF THE CREATED TABLE';
+PRINT'=========================================================================='
+
       
                 
 ALTER TABLE Bronze.crm_prd_info
