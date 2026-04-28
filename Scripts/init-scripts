@@ -18,7 +18,7 @@ Use master;
 CREATE Database DataWarehouse;
 
 --- To check for Database Method 1
-/*IF EXISTS (
+IF EXISTS (
     SELECT name 
     FROM sys.databases 
     WHERE name = 'DataWarehouse'
@@ -29,7 +29,7 @@ END
 ELSE
 BEGIN
     PRINT 'Database does not exist';
-END*/
+END
 
 ----mETHOD 2
 IF EXISTS (
