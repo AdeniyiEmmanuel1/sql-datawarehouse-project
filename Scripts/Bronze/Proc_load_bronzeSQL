@@ -1,0 +1,184 @@
+/* CREATING STORED PROCEDURE*/
+PRINT'============================================================='
+PRINT'STORED PROCEDURE: LOADING BRONZE LAYER';
+PRINT'============================================================='
+PRINT'============================================================='
+PRINT'Script Purpose
+        The purpose of this stored procedure is to load data into 
+        the Bronze schema fromexternal CSV files.
+        It performs the following actions:
+        -   Truncates the bronze table before loading the data
+        -   Uses the Bulk Insert command to load data from from
+            the CSV files tothe bronze tables 
+        
+        Parameter: None
+                   This stored Procedure does not use any parameter'
+PRINT'============================================================='
+
+CREATE or ALTER PROCEDURE bronze.load_bronze 
+AS
+DECLARE @Start_Time DATETIME, @End_Time DATETIME, @Batch_Start_Time DATETIME, @Batch_End_Time DATETIME; --------- This is to declare variables @Start_Time and @End_Time to calculate duration
+BEGIN
+    
+    BEGIN TRY ------------- To check for errors running the script
+    SET @Batch_Start_Time = GETDATE()
+    PRINT'==========================================================='
+    PRINT'Loading Bronze Layer';
+    PRINT'==========================================================='
+
+    PRINT'-----------------------------------------------------------'
+    PRINT'Loading CRM Tables';
+    PRINT'-----------------------------------------------------------'
+    
+    PRINT'==========================================================='
+    PRINT'Loading the first Table;
+    PRINT'==========================================================='
+    SET @Start_Time = GETDATE();
+
+    PRINT'>>>Truncating Table: Bronze.crm_cust_info';
+
+    TRUNCATE TABLE Bronze.crm_cust_info; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.crm_cust_info
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_crm\cust_info.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+    
+    /*Select * ----------------------------- To cross check rows and columns
+    From Bronze.crm_cust_info;*/
+
+    
+    PRINT'==========================================================='
+    PRINT'Loading the second Table;
+    PRINT'==========================================================='
+
+    SET @Start_Time = GETDATE ();
+    PRINT'>>>Truncating Table: Bronze.crm_prd_info';
+    TRUNCATE TABLE Bronze.crm_prd_info; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.crm_prd_info
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_crm\prd_info.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+    
+    /*Select * ----------------------------- To cross check rows and columns
+    From Bronze.crm_prd_info;
+
+    Select count(*) ----------------------------- To cross check rows and columns
+    From Bronze.crm_prd_info;*/
+
+    
+    PRINT'==========================================================='
+    PRINT'Loading the third Table;
+    PRINT'==========================================================='
+    
+    SET @Start_Time = GETDATE();
+    PRINT'>>>Truncating Table: Bronze.crm_sales_details';
+    TRUNCATE TABLE Bronze.crm_sales_details; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.crm_sales_details
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_crm\sales_details.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+
+    /*Select * ----------------------------- To cross check rows and columns
+    From Bronze.crm_sales_details;
+
+    Select count(*) ----------------------------- To cross check rows and columns
+    From Bronze.crm_sales_details;*/
+
+    /*
+    =====
+    4
+    ======
+    */
+    PRINT'-----------------------------------------------------------'
+    PRINT'Loading erp Tables';
+    PRINT'-----------------------------------------------------------'
+
+    PRINT'==========================================================='
+    PRINT'Loading the fourth Table;
+    PRINT'==========================================================='
+    
+    SET @Start_Time = GETDATE();
+    PRINT'>>>Truncating Table: Bronze.erp_CUST_AZ12'
+    TRUNCATE TABLE Bronze.erp_CUST_AZ12; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.erp_CUST_AZ12
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_erp\CUST_AZ12.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+    /*Select * ----------------------------- To cross check rows and columns
+    From Bronze.erp_CUST_AZ12;*/
+
+    PRINT'==========================================================='
+    PRINT'Loading the fifth Table;
+    PRINT'==========================================================='
+    SET @Start_Time = GETDATE();
+    PRINT'>>>Truncating Table: Bronze.erp_LOC_A101'
+    TRUNCATE TABLE Bronze.erp_LOC_A101; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.erp_LOC_A101
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_erp\LOC_A101.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+    /*Select * ----------------------------- To cross check rows and columns
+    From Bronze.erp_LOC_A101;*/
+
+    PRINT'==========================================================='
+    PRINT'Loading the Sixth Table;
+    PRINT'==========================================================='
+    SET @Start_Time = GETDATE()
+    PRINT'>>>Truncating Table: Bronze.erp_PX_CAT_G1V2'
+    TRUNCATE TABLE Bronze.erp_PX_CAT_G1V2; ------ To avoid reloading data into Tables
+
+    BULK INSERT Bronze.erp_PX_CAT_G1V2
+    FROM 'C:\Users\MSI\Desktop\data analysis\sql-ultimate-course\DATAWAREHOUSE PROJECT\sql-data-warehouse-project\datasets\source_erp\PX_CAT_G1V2.csv'
+    WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    TABLOCK);
+    SET @End_Time = GETDATE();
+    PRINT'>> load Duration:' + CASt(DATEDIFF(second,@Start_Time,@End_Time) AS NVARCHAR) + ' seconds'
+    PRINT'>> ---------------------------------------------------------'
+    SET @Batch_End_Time = GETDATE();
+    PRINT'================================================'
+    PRINT' ------ Batch loading completed-----------------'
+    PRINT'>> Batch load Duration:' + CASt(DATEDIFF(second,@Batch_Start_Time,@Batch_End_Time) AS NVARCHAR) + ' seconds'
+    END TRY
+    BEGIN CATCH
+    PRINT'================================================'
+    PRINT'Error occured during loading Bronze'
+    PRINT'Error Message' + CAST(Error_Number () AS NVARCHAR) ------------------ casting to convert interger to string
+    PRINT'================================================'
+    END CATCH
+    
+END
+/*Select * ----------------------------- To cross check rows and columns
+From Bronze.erp_PX_CAT_G1V2;*/
