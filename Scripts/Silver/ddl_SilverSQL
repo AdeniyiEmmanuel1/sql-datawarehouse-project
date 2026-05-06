@@ -1,6 +1,8 @@
 PRINT'================================================================================'
-PRINT'Creating a DDL for the Silver Table' 
-PRINT'Description'
+/* Creating the Silver Table 
+Purpose: The following script creates tables in the silver schema
+        then drops any tables if they already exist
+        Run thsi script to redefine the DDL structure of the Silver Tables*/
 PRINT'================================================================================='
 
 IF OBJECT_ID ('Silver.crm_cust_info','U') IS NOT NULL------- This is to avoid error of creating the same table
