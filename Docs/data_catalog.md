@@ -32,7 +32,7 @@ The Gold Layer is the business-level data representation, structured to support 
 |---------------------|---------------|-----------------------------------------------------------------------------------------------|
 | product_key         | INT           | Surrogate key uniquely identifying each product record in the product dimension table.         |
 | product_id          | INT           | A unique identifier assigned to the product for internal tracking and referencing.            |
-| product_number      | NVARCHAR(50)  | A structured alphanumeric code representing the product, often used for categorization or inventory. |
+| Product_number      | NVARCHAR(50)  | A structured alphanumeric code representing the product, often used for categorization or inventory. |
 | product_name        | NVARCHAR(50)  | Descriptive name of the product, including key details such as type, color, and size.         |
 | category_id         | NVARCHAR(50)  | A unique identifier for the product's category, linking to its high-level classification.     |
 | category            | NVARCHAR(50)  | The broader classification of the product (e.g., Bikes, Components) to group related items.  |
@@ -44,7 +44,7 @@ The Gold Layer is the business-level data representation, structured to support 
 
 ---
 
-### 3. **gold.fact_sales**
+### 3. **gold.dim_Sales**
 - **Purpose:** Stores transactional sales data for analytical purposes.
 - **Columns:**
 
